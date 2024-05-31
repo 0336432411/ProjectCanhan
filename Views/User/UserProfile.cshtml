@@ -1,0 +1,105 @@
+@model Account
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using ProjectCaNhan.Controllers
+
+@{
+    ViewData["Title"] = "UserProfile";
+}
+
+<style>
+    .profile-container {
+        margin: 20px auto;
+        max-width: 80%;
+        text-align: center;
+    }
+    .profile-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .profile-header h2 {
+        margin: 0;
+    }
+    .btn-custom {
+        margin-left: 10px;
+    }
+    .profile-table-container {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+<div class="profile-container">
+    <div class="profile-header">
+        <h2>User Profile</h2>
+        <div>
+            @if (HttpContextAccessor.HttpContext.Session.GetString("_UserName") != null)
+            {
+                <a asp-controller="Login" asp-action="Logout" class="btn btn-dark btn-custom">Logout</a>
+            }
+            else
+            {
+                <a asp-controller="Login" asp-action="Login" class="btn btn-success btn-custom">Login</a>
+            }
+        </div>
+    </div>
+
+    <div class="profile-table-container">
+        <table class="table table-hover table-bordered mt-4">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Fullname</th>
+                    <th>Date of Birth</th>
+                    <th>Gender</th>
+                    <th>Address</th>
+                    <th>Id Card</th>
+                    <th>Phone Number</th>
+                    <th>Height</th>
+                    <th>Weight</th>
+                    <th>Roles</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.Id</td>
+                    <td>@Model.Email</td>
+                    <td>@Model.Username</td>
+                    <td>@Model.Password</td>
+                    <td>@Model.Fullname</td>
+                    <td>@Model.DateOfBirth</td>
+                    <td>@Model.Gender</td>
+                    <td>@Model.Address</td>
+                    <td>@Model.IdCard</td>
+                    <td>@Model.Phonenumber</td>
+                    <td>@Model.Height</td>
+                    <td>@Model.Weight</td>
+                    <td>
+                        @if (Model.Roles == 1)
+                        {
+                            <span class="badge badge-primary">Admin</span>
+                        }
+                        else if (Model.Roles == 2)
+                        {
+                            <span class="badge badge-secondary">Staff</span>
+                        }
+                        else if (Model.Roles == 3)
+                        {
+                            <span class="badge badge-info">User</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

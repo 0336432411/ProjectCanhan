@@ -1,0 +1,177 @@
+@model IEnumerable<Account>
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using ProjectCaNhan.Controllers
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #fff;
+        background-color: #28a745;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #19692c;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+    }
+
+    .btn-danger:hover {
+        background-color: #a71d2a;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+    }
+
+    .btn-warning:hover {
+        background-color: #d39e00;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+    }
+
+    .btn-success:hover {
+        background-color: #19692c;
+    }
+
+    .btn-dark {
+        background-color: #343a40;
+    }
+
+    .btn-dark:hover {
+        background-color: #1d2124;
+    }
+
+    .table-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .table {
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 1200px;
+        margin: 20px auto;
+    }
+
+    .table th,
+    .table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+
+    .table td {
+        font-size: 14px;
+    }
+
+    .profile-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .profile-container h2,
+    .profile-container .btn {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 10px;
+    }
+</style>
+
+<div class="profile-container">
+    <h2>Staff Profile</h2>
+    @if (HttpContextAccessor.HttpContext.Session.GetString("_UserName") != null)
+    {
+        <a asp-controller="Login" asp-action="Logout" class="btn btn-dark">Logout</a>
+    }
+    else
+    {
+        <a asp-controller="Login" asp-action="Login" class="btn btn-success">Login</a>
+    }
+</div>
+
+<hr>
+<a asp-controller="Account" asp-action="Create" class="btn btn-success">Create User</a>
+
+<div class="table-container">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Fullname</th>
+                <th>Date of Birth</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>ID Card</th>
+                <th>Phone Number</th>
+                <th>Height</th>
+                <th>Weight</th>
+                <th>Roles</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Email</td>
+                    <td>@item.Username</td>
+                    <td>@item.Password</td>
+                    <td>@item.Fullname</td>
+                    <td>@item.DateOfBirth</td>
+                    <td>@item.Gender</td>
+                    <td>@item.Address</td>
+                    <td>@item.IdCard</td>
+                    <td>@item.Phonenumber</td>
+                    <td>@item.Height</td>
+                    <td>@item.Weight</td>
+                    <td>
+                        @if (item.Roles == 1)
+                        {
+                            <span class="badge badge-primary">Admin</span>
+                        }
+                        else if (item.Roles == 2)
+                        {
+                            <span class="badge badge-secondary">Staff</span>
+                        }
+                        else if (item.Roles == 3)
+                        {
+                            <span class="badge badge-info">User</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

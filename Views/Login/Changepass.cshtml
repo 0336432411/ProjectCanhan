@@ -1,0 +1,22 @@
+@model Account
+@{
+    ViewData["Title"] = "Changepass";
+}
+
+<form asp-controller="Account" asp-action="ForgotPassword" method="post">
+<label asp-for="@Model.Password"></label>
+        <input type="password" asp-for="Password" class="form-control" >
+        <span asp-validation-for="Password"></span>
+        <br>
+        <label asp-for="@Model.ConfirmPassword"></label>
+        <input type="password" asp-for="ConfirmPassword" class="form-control">
+        <span asp-validation-for="ConfirmPassword"></span>
+        <br>
+        <input type="submit" value="ChangePassword" >
+</form>
+
+@section Scripts {
+  @{
+    <partial name="_ValidationScriptsPartial" />
+  }
+}

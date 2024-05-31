@@ -1,0 +1,32 @@
+@model Account
+@{
+  ViewData["Title"] = "Login";
+}
+
+<span class="text-danger">@TempData["LoginError"]</span>
+
+<br>
+<hr>
+<div class="form-group">
+
+<form asp-controller="Login" asp-action="Login" method="post" >
+  <label for="">Username</label>
+  <input type="text" asp-for="Username" class="form-control" placeholder="Username" >
+  <span asp-validation-for="Username"></span>
+  <br>
+  <label for="">Password</label>
+  <input type="password" asp-for="Password" placeholder="Password" class="form-control">
+  <span asp-validation-for="Password"></span>
+  <br>
+    
+  <input type="submit" value="Login" class="btn btn-success">
+   
+  <a asp-action="Register" asp-controller="Login" class="btn btn-primary">Register</a>
+  <a asp-action="ForgotPassword" asp-controller="Login" class="btn btn-primary">Forgot Password</a>
+</form>
+</div>
+@section Scripts {
+  @{
+    <partial name="_ValidationScriptsPartial" />
+  }
+}
